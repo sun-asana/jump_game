@@ -1,1 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jump Game Engine</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script>
+</head>
+<body>
 
+    <div id="game-container">
+        <div class="hud">
+            <div id="lives-display"></div>
+            <div id="score-display">Баллы: 0</div>
+        </div>
+
+        <div id="question-box">
+            <div id="question-text"></div>
+        </div>
+
+        <div id="platforms-container"></div>
+
+        <div id="player"></div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Логика получения данных из URL (для Genially)
+        const urlParams = new URLSearchParams(window.location.search);
+        const encodedData = urlParams.get('data');
+        
+        if (encodedData) {
+            try {
+                const config = JSON.parse(decodeURIComponent(escape(atob(encodedData))));
+                initGame(config); // Запуск игры из script.js
+            } catch (e) {
+                console.error("Ошибка загрузки данных:", e);
+            }
+        }
+    </script>
+</body>
+</html>
