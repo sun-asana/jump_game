@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Конструктор Образовательной Игры</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js"></script>
+    <style>
+        body { font-family: sans-serif; background: #f0f4f8; padding: 20px; color: #333; }
+        .panel { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); max-width: 800px; margin: auto; }
+        .setting-group { margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; }
+        select, input { width: 100%; padding: 8px; border-radius: 6px; border: 1px solid #ccc; }
+        .q-block { background: #f9f9f9; padding: 15px; border-radius: 8px; margin-top: 10px; border-left: 5px solid #4a90e2; }
+        .btn-gen { background: #28a745; color: white; padding: 15px; border: none; border-radius: 8px; cursor: pointer; width: 100%; font-size: 18px; }
+    </style>
+</head>
+<body>
+
+<div class="panel">
+    <h1>🎨 Настройка твоей игры</h1>
+    
+    <div class="setting-group">
+        <label>1. Выберите локацию:</label>
+        <select id="theme" onchange="updateChars()">
+            <option value="jungle">Джунгли 🌿</option>
+            <option value="space">Космос ✨</option>
+            <option value="sea">Море 🌊</option>
+        </select>
+    </div>
+
+    <div class="setting-group">
+        <label>2. Выберите персонажа:</label>
+        <select id="character"></select>
+    </div>
+
+    <div class="setting-group">
+        <label>3. Шрифт и Цвет:</label>
+        <input type="color" id="text-color" value="#ffffff">
+        <select id="font-family" style="margin-top: 5px;">
+            <option value="Arial">Обычный</option>
+            <option value="'Comic Sans MS'">Детский/Веселый</option>
+            <option value="'Courier New'">Математический/Код</option>
+        </select>
+    </div>
+
+    <div id="questions-area">
+        <h3>Вопросы (используй $...$ для формул)</h3>
+        </div>
+    
+    <button onclick="addQuestionField()" style="margin-bottom: 20px;">+ Добавить вопрос</button>
+
+    <button class="btn-gen" onclick="generateCode()">🚀 Сгенерировать код для Genially</button>
+</div>
+
+<script>
+    const charData = {
+        jungle: ["Обезьянка 🐒", "Лягушка 🐸", "Феечка ✨", "Тигренок 🐯"],
+        space: ["Летучий корабль 🛸", "Пришелец 👽", "Космонавт 👨‍🚀"],
+        sea: ["Корабль 🚢", "Дельфин 🐬", "Русалка 🧜‍♀️"]
+    };
+
+    function updateChars() {
+        const theme = document.getElementById('theme').value;
+        const charSelect = document.getElementById('character');
+        charSelect.innerHTML = charData[theme].map(c => `<option>${c}</option>`).join('');
+    }
+
+    function addQuestionField() {
+        const div = document.createElement('div');
+        div.className = 'q-block';
+        div.innerHTML = `
+            <input type="text" placeholder="Вопрос (текст или LaTeX)">
+            <input type="text" placeholder="Правильный ответ" style="margin-top:5px; border-color: green;">
+            <input type="text" placeholder="Неверный вариант 1" style="margin-top:5px;">
+            <input type="text" placeholder="Неверный вариант 2" style="margin-top:5px;">
+        `;
+        document.getElementById('questions-area').appendChild(div);
+    }
+
+    updateChars(); // Инициализация
+    addQuestionField(); // Сразу один вопрос
+</script>
+
+</body>
+</html>
